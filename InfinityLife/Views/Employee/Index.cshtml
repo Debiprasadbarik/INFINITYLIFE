@@ -1,0 +1,478 @@
+﻿@model InfinityLife.Models.DashboardViewModel
+@{
+
+    ViewData["Title"] = "Director Dashboard";
+}
+
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Director Dashboard</h1>
+        <div>
+            <a asp-controller="Employee" asp-action="Create" class="btn btn-primary me-2">Create New Employee</a>
+            <form asp-controller="Login" asp-action="Logout" method="post" class="d-inline">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Total Active Employees
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @{
+                                    var count = 0;
+                                }
+                                @foreach (var e in Model?.AllEmployees ?? new List<Employee>())
+                                {
+                                    count++;
+                                }
+                                <p>@count</p>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col mb-4">
+            <div class="col-md-4 ">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class=" rounded-lg shadow-md p-6 mb-6 btn-warning">
+                                    <a href="@Url.Action("PendingRequests", "DirectorDashboard")" class="btn btn-warning">Pending Requests <i class="fas fa-clock fa-2x text-gray-300"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add more dashboard cards as needed -->
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center"
+         role="button"
+         onclick="toggleLeaveBalanceTable()">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-calendar me-2"></i>Employee Leave Balances
+        </h6>
+        <i class="fas fa-chevron-down" id="leaveToggleIcon"></i>
+    </div>
+    <div class="card-body" id="leaveBalanceTableSection" style="display: none;">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="leaveBalanceTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Total Leaves</th>
+                        <th>Used Leaves</th>
+                        <th>Remaining Leaves</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model?.LeaveBalances != null)
+                    {
+                        @foreach (var balance in Model.LeaveBalances)
+                        {
+                            <tr>
+                                <td>@balance.EmployeeId</td>
+                                <td>@balance.TotalLeaves</td>
+                                <td>@(balance.TotalLeaves - balance.RemainingLeaves)</td>
+                                <td>@balance.RemainingLeaves</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center"
+         role="button"
+         onclick="toggleEmployeeTable()">
+        <h6 class="m-0 font-weight-bold text-primary">
+            <i class="fas fa-users me-2"></i>Employee Management
+        </h6>
+        <i class="fas fa-chevron-down" id="toggleIcon"></i>
+    </div>
+    <div class="card-body" id="employeeTableSection" style="display: none;">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="employeeTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employee in Model?.AllEmployees ?? new List<Employee>())
+                    {
+                        <tr data-employee-id="@employee.EmpId">
+                            <td>@employee.EmpId</td>
+                            <td>@($"{employee.EmpFirstName} {employee.EmpLastName}")</td>
+                            <td>@employee.EmpPhone</td>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-info"
+                                            onclick="showDetails('@employee.EmpId', '@employee.EmpFirstName @employee.EmpLastName','@employee.DateOfBirth','@employee.DateOfJoining',
+                                                '@employee.BasicSalary', '@employee.HRA', '@employee.Conveyance',
+                                                '@employee.OtherAllowances', '@employee.PF', '@employee.ESIC',
+                                                '@employee.ProfessionalTax', '@employee.IncomeTax', '@employee.EmpEmail', '@employee.Password')">
+                                        <i class="fas fa-info-circle"></i> Details
+                                    </button>
+                                    <a href="@Url.Action("Edit", "Employee", new { id = employee.EmpId })"
+                                       class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="@Url.Action("Generate", "PaySlip", new { employeeId = employee.EmpId })"
+                                       class="btn btn-sm btn-success" target="_blank">
+                                        <i class="fas fa-file-invoice-dollar"></i> PaySlip
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-danger"
+                                            onclick="confirmDelete('@employee.EmpId', '@($"{employee.EmpFirstName} {employee.EmpLastName}")')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!-- Employee Details Button Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title" id="detailsModalLabel">Employee Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card mb-3">
+                    <div class="card-header bg-primary text-white">
+                        Personal Information
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Name:</strong> <span id="employeeNameTitle"></span></p>
+                                <p><strong>Email:</strong> <span id="employeeEmail"></span></p>
+                                <p><strong>DOB:</strong> <span id="employeeDOB"></span></p>
+                                <p><strong>Date of Joining:</strong> <span id="employeeDOJ"></span></p>
+                                <p>
+                                    <strong>Password:</strong>
+                                    <span id="maskedPassword"></span>
+                                    <span id="employeePassword" style="display:none;"></span>
+                                    <button class="btn btn-sm btn-outline-secondary ms-2"
+                                            onclick="togglePassword()"
+                                            id="togglePasswordBtn">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-success text-white">
+                                Earnings
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td>Basic Salary</td>
+                                        <td id="basicSalary"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>HRA</td>
+                                        <td id="hra"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Conveyance</td>
+                                        <td id="conveyance"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Other Allowances</td>
+                                        <td id="otherAllowances"></td>
+                                    </tr>
+                                    <tr class="table-success fw-bold">
+                                        <td>Gross Salary</td>
+                                        <td id="grossSalary"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-danger text-white">
+                                Deductions
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td>PF</td>
+                                        <td id="pf"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>ESIC</td>
+                                        <td id="esic"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Professional Tax</td>
+                                        <td id="professionalTax"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Income Tax</td>
+                                        <td id="incomeTax"></td>
+                                    </tr>
+                                    <tr class="table-danger fw-bold">
+                                        <td>Total Deductions</td>
+                                        <td id="totalDeductions"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header bg-primary text-white">
+                        Net Salary Details
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-sm">
+                                    <tr class="table-primary fw-bold">
+                                        <td>Net Salary</td>
+                                        <td id="netSalary"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete employee <span id="employeeName"></span>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" asp-controller="Employee" asp-action="Delete" method="post">
+                    <!--input type="hidden" id="deleteEmployeeId" name="id" /-->
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+            // Custom search box
+            // $('#searchTable').on('keyup', function() {
+            //     table.search(this.value).draw();
+            // });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize DataTable
+            $('#employeeTable').DataTable({
+                "pageLength": 10,
+                "ordering": true,
+                "info": true,
+                "lengthChange": true,
+                "searching": true,
+                "responsive": true
+            });
+            $('#leaveBalanceTable').DataTable({
+                "pageLength": 10,
+                "ordering": true,
+                "info": true,
+                "lengthChange": true,
+                "searching": true,
+                "responsive": true
+            });
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "3000"
+            };
+        });
+        function toggleLeaveBalanceTable() {
+            const section = document.getElementById('leaveBalanceTableSection');
+            const icon = document.getElementById('leaveToggleIcon');
+
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                section.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+        function toggleEmployeeTable() {
+            const section = document.getElementById('employeeTableSection');
+            const icon = document.getElementById('toggleIcon');
+
+            if (section.style.display === 'none') {
+                section.style.display = 'block';
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                section.style.display = 'none';
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+        function maskPassword(password) {
+            if (!password) return '';
+            return '•'.repeat(password.length);
+        }
+        let isPasswordVisible = false;
+        function togglePassword() {
+            const maskedElement = document.getElementById('maskedPassword');
+            const fullElement = document.getElementById('employeePassword');
+            const toggleBtn = document.getElementById('togglePasswordBtn');
+            const icon = toggleBtn.querySelector('i');
+
+            if (isPasswordVisible) {
+                maskedElement.style.display = 'inline';
+                fullElement.style.display = 'none';
+                icon.className = 'fas fa-eye';
+            } else {
+                maskedElement.style.display = 'none';
+                fullElement.style.display = 'inline';
+                icon.className = 'fas fa-eye-slash';
+            }
+
+            isPasswordVisible = !isPasswordVisible;
+        }
+        function showDetails(empId, name,DOB,DOJ,basicSalary, hra, conveyance, otherAllowances, pf, esic, professionalTax, incomeTax,email,password) {
+            isPasswordVisible = false;
+            basicSalary = Number(basicSalary);
+            hra = Number(hra);
+            conveyance = Number(conveyance);
+            otherAllowances = Number(otherAllowances);
+            pf = Number(pf);
+            esic = Number(esic);
+            professionalTax = Number(professionalTax);
+            incomeTax = Number(incomeTax);
+            const grossSalary = basicSalary + hra + conveyance + otherAllowances;
+            const totalDeductions = pf + esic + professionalTax + incomeTax;
+            const netSalary = grossSalary - totalDeductions;
+            // Update personal information
+            document.getElementById('employeeNameTitle').textContent = name;
+            document.getElementById('employeeEmail').textContent = email;
+            document.getElementById('employeeDOB').textContent = DOB;
+            document.getElementById('employeeDOJ').textContent = DOJ;
+            document.getElementById('employeePassword').textContent = password;
+            // Update earnings
+            document.getElementById('basicSalary').textContent = '₹' + Number(basicSalary).toLocaleString();
+            document.getElementById('hra').textContent = '₹' + Number(hra).toLocaleString();
+            document.getElementById('conveyance').textContent = '₹' + Number(conveyance).toLocaleString();
+            document.getElementById('otherAllowances').textContent = '₹' + Number(otherAllowances).toLocaleString();
+            document.getElementById('grossSalary').textContent = '₹' + grossSalary.toLocaleString();
+            // Update deductions
+            document.getElementById('pf').textContent = '₹' + Number(pf).toLocaleString();
+            document.getElementById('esic').textContent = '₹' + Number(esic).toLocaleString();
+            document.getElementById('professionalTax').textContent = '₹' + Number(professionalTax).toLocaleString();
+            document.getElementById('incomeTax').textContent = '₹' + Number(incomeTax).toLocaleString();
+            document.getElementById('totalDeductions').textContent = '₹' + totalDeductions.toLocaleString();
+            // Update net salary
+            document.getElementById('netSalary').textContent = '₹' + netSalary.toLocaleString();
+            new bootstrap.Modal(document.getElementById('detailsModal')).show();
+        }
+        // Delete confirmation
+        function confirmDelete(employeeId, employeeName) {
+            //document.getElementById('deleteEmployeeId').value = employeeId;
+            document.getElementById('employeeName').textContent = employeeName;
+            const deleteForm = document.getElementById('deleteForm');
+            deleteForm.setAttribute('data-employee-id', employeeId);
+            deleteForm.action = `/Employee/Delete/${employeeId}`;
+            new bootstrap.Modal(document.getElementById('deleteModal')).show();
+        }
+        document.getElementById('deleteForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const employeeId = this.getAttribute('data-employee-id');
+            const modal = bootstrap.Modal.getInstance(document.getElementById('deleteModal'));
+
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="__RequestVerificationToken"]').value
+                    }
+                });
+
+                if (response.ok) {
+                    // Remove the row from the DataTable
+                    const table = $('#employeeTable').DataTable();
+                    const row = table.row($(`tr[data-employee-id="${this.action.split('/').pop()}"]`));
+                    //row.remove().draw();
+                    if (table.row(row).length > 0) {
+                        table.row(row).remove().draw(false);
+
+                        // Show success message using toastr
+                        toastr.success('Employee deleted successfully');
+
+                        // Log for debugging
+                        console.log(`Removed employee row with ID: ${employeeId}`);
+                    } else {
+                        console.warn(`Row with employee ID ${employeeId} not found in table`);
+                    }
+                }
+                else {
+                    throw new Error('Failed to delete employee');
+                }
+            }
+            catch (error) {
+                toastr.error('Error deleting employee');
+                console.error('Error:', error);
+            } finally {
+                modal.hide();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,182 @@
+﻿@model Leave
+@{
+    ViewData["Title"] = "Request Leave";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leave Request Form</title>
+</head>
+<body>
+    <div class="container">
+        <form method="POST" action="/Leave/Request" id="leaveRequestForm">
+            @Html.AntiForgeryToken()
+            <div class="form-group mb-3">
+                <label for="employeeId">Employee ID</label>
+                <input type="text" class="form-control" id="employeeId" name="EmployeeId" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="fromDate">From Date</label>
+                <input type="date" class="form-control" id="fromDate" name="FromDate" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="toDate">To Date</label>
+                <input type="date" class="form-control" id="toDate" name="ToDate" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="reason">Reason</label>
+                <textarea class="form-control" id="reason" name="Reason" rows="3" required></textarea>
+            </div>
+            <input type="hidden" id="status" name="Status" value="Pending">
+
+            <div id="validation-message" class="alert alert-danger d-none"></div>
+            <div id="success-message" class="alert alert-success d-none">Leave request submitted successfully!</div>
+
+            <button type="submit" class="btn btn-primary">Submit Request</button>
+            <a href="@Url.Action("Index", "Dashboard")" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+             
+        </form>
+    </div>
+
+    <script>
+                // Check employee leave balance when ID is entered
+            document.getElementById('employeeId').addEventListener('blur', async function() {
+                    const employeeId = this.value.trim();
+            if (employeeId) {
+                        try {
+                            const response = await fetch(`/Leave/GetLeaveBalance?employeeId=${encodeURIComponent(employeeId)}`);
+            const data = await response.json();
+
+            const balanceInfo = document.getElementById('leave-balance-info');
+            const employeeIdInput = document.getElementById('employeeId');
+            const employeeIdError = document.getElementById('employeeIdError');
+
+            if (data.success) {
+                    balanceInfo.textContent = `Available Leave Balance: ${data.remainingLeaves} days`;
+                balanceInfo.classList.remove('d-none', 'alert-danger');
+                balanceInfo.classList.add('alert-info');
+                employeeIdInput.classList.remove('is-invalid');
+                employeeIdInput.classList.add('is-valid');
+                            } else {
+                    balanceInfo.textContent = 'Unable to find leave balance for this employee ID';
+                balanceInfo.classList.remove('d-none', 'alert-info');
+                balanceInfo.classList.add('alert-danger');
+                employeeIdInput.classList.remove('is-valid');
+                employeeIdInput.classList.add('is-invalid');
+                employeeIdError.textContent = 'Invalid Employee ID';
+                            }
+                            } catch (error) {
+                    console.error('Error checking leave balance:', error);
+                const balanceInfo = document.getElementById('leave-balance-info');
+                balanceInfo.textContent = 'Error checking leave balance. Please try again.';
+                balanceInfo.classList.remove('d-none', 'alert-info');
+                balanceInfo.classList.add('alert-danger');
+                        }
+                    }
+                });
+            document.getElementById('leaveRequestForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                // Clear previous error messages
+                document.getElementById('validation-message').classList.add('d-none');
+                document.getElementById('success-message').classList.add('d-none');
+                document.querySelectorAll('.field-validation-error').forEach(span => span.textContent = '');
+
+                try {
+                    const formData = new FormData(this);
+
+                    // Log form data for debugging
+                    for (let pair of formData.entries()) {
+                        console.log(pair[0] + ': ' + pair[1]);
+                    }
+
+                    const response = await fetch('/Leave/Request', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                        }
+                    });
+
+                    const result = await response.json();
+                    console.log('Server response:', result);  // Debug log
+
+                    if (result.success) {
+                        // Show success message
+                        const successDiv = document.getElementById('success-message');
+                        successDiv.classList.remove('d-none');
+                        // Disable the submit button to prevent double submission
+                        document.querySelector('button[type="submit"]').disabled = true;
+                        setTimeout(() => {
+                        window.location.href = '/Dashboard/Index';
+                        }, 1500);
+                     } 
+                    else {
+                        // Show error message
+                        const validationDiv = document.getElementById('validation-message');
+                        validationDiv.textContent = result.message || 'An error occurred while submitting the request';
+                        validationDiv.classList.remove('d-none');
+
+                        // Log error details
+                        console.error('Submission failed:', result.message);
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    showError('Network error: ' + error.message);
+                }
+             });
+
+                function showError(message) {
+                        const validationDiv = document.getElementById('validation-message');
+                validationDiv.textContent = message;
+                validationDiv.classList.remove('d-none');
+                console.error('Error:', message);  // Debug log
+                    }
+
+            // Add date validation
+            document.getElementById('fromDate').addEventListener('change', validateDates);
+            document.getElementById('toDate').addEventListener('change', validateDates);
+
+            function validateDates() {
+                    const fromDate = new Date(document.getElementById('fromDate').value);
+            const toDate = new Date(document.getElementById('toDate').value);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            let isValid = true;
+            const errors = [];
+
+            if (fromDate < today) {
+                errors.push('From Date cannot be in the past');
+                isValid = false;
+                document.getElementById('fromDate').classList.add('is-invalid');
+                    }
+
+            if (toDate < today) {
+                errors.push('To Date cannot be in the past');
+                isValid = false;
+                document.getElementById('toDate').classList.remove('is-invalid');
+                    }
+
+                    if (fromDate > toDate) {
+                errors.push('From Date cannot be later than To Date');
+                isValid = false;
+                    }
+
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.disabled = !isValid;
+
+            if (!isValid) {
+                showError(errors.join('; '));
+                    } else {
+                document.getElementById('validation-message').classList.add('d-none');
+                    }
+                }
+    </script>
+    
+</body>
+</html>

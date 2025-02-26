@@ -1,0 +1,155 @@
+﻿@model InfinityLife.Models.PaySlipViewModel
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Generate Pay Slip</h1>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-plus me-1"></i>
+            New Pay Slip
+        </div>
+        <div class="card-body">
+            <form asp-action="Generate" method="post" id="paySlipForm">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="EmployeeId" class="control-label"></label>
+                            <select asp-for="EmployeeId" class="form-select" asp-items="ViewBag.Employee">
+                                <option value="">-- Select Employee --</option>
+                            </select>
+                            <span asp-validation-for="EmployeeId" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                    <label asp-for="PayPeriod" class="control-label"></label>
+                                    <input asp-for="PayPeriod" type="date"/>
+                                    <span asp-validation-for="PayPeriod" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h4>Earnings</h4>
+                        <div class="form-group mb-3">
+                            <label asp-for="BasicSalary" class="control-label"></label>
+                            <input asp-for="BasicSalary" class="form-control earnings" />
+                            <span asp-validation-for="BasicSalary" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="HRA" class="control-label"></label>
+                            <input asp-for="HRA" class="form-control earnings" />
+                            <span asp-validation-for="HRA" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Conveyance" class="control-label"></label>
+                            <input asp-for="Conveyance" class="form-control earnings" />
+                            <span asp-validation-for="Conveyance" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="OtherAllowances" class="control-label"></label>
+                            <input asp-for="OtherAllowances" class="form-control earnings" />
+                            <span asp-validation-for="OtherAllowances" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="Bonus" class="control-label"></label>
+                            <input asp-for="Bonus" class="form-control earnings" />
+                            <span asp-validation-for="Bonus" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="GrossSalary" class="control-label"></label>
+                            <input asp-for="GrossSalary" class="form-control" readonly />
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h4>Deductions</h4>
+                        <div class="form-group mb-3">
+                            <label asp-for="PF" class="control-label"></label>
+                            <input asp-for="PF" class="form-control deductions" />
+                            <span asp-validation-for="PF" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="ESIC" class="control-label"></label>
+                            <input asp-for="ESIC" class="form-control deductions" />
+                            <span asp-validation-for="ESIC" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="ProfessionalTax" class="control-label"></label>
+                            <input asp-for="ProfessionalTax" class="form-control deductions" />
+                            <span asp-validation-for="ProfessionalTax" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="IncomeTax" class="control-label"></label>
+                            <input asp-for="IncomeTax" class="form-control deductions" />
+                            <span asp-validation-for="IncomeTax" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label asp-for="TotalDeductions" class="control-label"></label>
+                            <input asp-for="TotalDeductions" class="form-control" readonly />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <div class="form-group mb-3">
+                            <label asp-for="NetSalary" class="control-label"></label>
+                            <input asp-for="NetSalary" class="form-control" readonly />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mt-4">
+                    <input type="submit" value="Generate Pay Slip" class="btn btn-primary" />
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function() {
+            function calculateTotals() {
+                var grossSalary = 0;
+                $('.earnings').each(function() {
+                    var value = parseFloat($(this).val()) || 0;
+                    grossSalary += value;
+                });
+                $('#GrossSalary').val(grossSalary.toFixed(2));
+
+                var totalDeductions = 0;
+                $('.deductions').each(function() {
+                    var value = parseFloat($(this).val()) || 0;
+                    totalDeductions += value;
+                });
+                $('#TotalDeductions').val(totalDeductions.toFixed(2));
+
+                var netSalary = grossSalary - totalDeductions;
+                $('#NetSalary').val(netSalary.toFixed(2));
+            }
+
+            $('.earnings, .deductions').on('input', calculateTotals);
+            calculateTotals();
+        });
+    </script>
+}

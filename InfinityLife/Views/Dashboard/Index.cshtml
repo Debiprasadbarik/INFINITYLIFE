@@ -1,0 +1,223 @@
+﻿@model InfinityLife.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Employee Dashboard";
+}
+@* @if (User.IsInRole("Director") || User.IsInRole("HR"))
+{
+    <div class="alert alert-info">
+        <h5>Debug Information:</h5>
+        <ul>
+            <li>User Email: @ViewBag.DebugInfo.UserEmail</li>
+            <li>User Role: @ViewBag.DebugInfo.UserRole</li>
+            <li>Employee ID: @ViewBag.DebugInfo.EmployeeId</li>
+            <li>Has Pay Slips: @ViewBag.DebugInfo.HasPaySlips</li>
+            <li>Pay Slips Count: @ViewBag.DebugInfo.PaySlipsCount</li>
+        </ul>
+    </div>
+} *@
+@* @if (Model?.Employee == null)
+{
+    <div class="alert alert-warning">
+        Employee data is null
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        Debug: Employee ID: @Model?.Employee?.EmpFirstName
+    </div>
+} *@
+<div class="container-fluid p-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="mb-4">Employee Dashboard</h2>
+            <div class="alert alert-info">
+                <b>Welcome, @Model?.Employee?.EmpFirstName @Model?.Employee?.EmpLastName</b>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Profile Section -->
+        <div class="col-12 col-xl-4 mb-4">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Profile Information</h6>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        @if (Model?.Employee?.ProfilePicture != null)
+                        {
+                            <img class="img-profile rounded-circle mb-3"
+                                 src="data:image/jpeg;base64,@Convert.ToBase64String(Model.Employee.ProfilePicture)"
+                                 style="width: 150px; height: 150px;" />
+                        }
+                        else
+                        {
+                            <img class="img-profile rounded-circle mb-3"
+                                 src="/images/image.png"
+                                 style="width: 150px; height: 150px;" />
+                        }
+                    </div>
+                    <div class="mb-2"><strong>Employee ID:</strong><strong> @Model?.Employee?.EmpId</strong></div>
+                    <div class="mb-2"><strong>Name:</strong><strong> @Model?.Employee?.EmpFirstName @Model?.Employee?.EmpLastName</strong></div>
+                    <div class="mb-2"><strong>Email:</strong><strong> @Model?.Employee?.EmpEmail</strong></div>
+                    <div class="mb-2"><strong>Phone:</strong><strong> @Model?.Employee?.EmpPhone</strong></div>
+                    <div class="mb-2"><strong>Address:</strong><strong> @Model?.Employee?.EmpAddress</strong></div>
+                    <div class="mb-2"><strong>Emergency Contact:</strong><strong> @Model?.Employee?.EmergencyContact</strong></div>
+                    <div class="mb-2"><strong>Blood Group:</strong><strong> @Model?.Employee?.Bloodgroup</strong></div>
+                    <div class="mb-2"><strong>Aadhaar No:</strong><strong> @Model?.Employee?.AadharNo</strong></div>
+                    <div class="mb-2"><strong>PanCard No:</strong><strong> @Model?.Employee?.PanNo</strong></div>
+                    <div class="mb-2"><strong>Date Of Birth:</strong><strong> @Model?.Employee?.DateOfBirth</strong></div>
+                    <div class="mb-2"><strong>Date of Joining:</strong><strong> @Model?.Employee?.DateOfJoining</strong></div>
+                    @* <div class="mb-2"><strong>Join Date:</strong> @Model.Employee?.JoinDate?.ToShortDateString()</div> *@
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="col-12 col-xl-8 mb-4">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Quick Links</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3" id="buttonDiv">
+                            @{
+                                var currentDate = DateTime.Now;
+
+                                var currentPeriod = new DateTime(currentDate.Year, currentDate.Month, 1);
+                            }
+                            <a href="#PaySlipSection"
+                               class="btn btn-info btn-block">
+                                <i class="fas fa-calendar-alt mr-1"></i> View Salary Slip
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="/Leave/request" class="btn btn-success btn-block">
+                                <i class="fas fa-file-alt mr-1"></i> Leave Request
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="#" class="btn btn-warning btn-block">
+                                <i class="fas fa-clock mr-1"></i> Emergency Leave
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <a href="@Url.Action("MyLeaveStatus", "Leave", new { employeeId = Model?.Employee?.EmpId })" class="btn btn-check btn-block" >
+                                <i class="fas fa-file-alt mr-1"></i>  My Leave Status
+                            </a>
+                        </div>
+                        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                            <h2 class="text-xl font-bold mb-4">Leave Balance</h2>
+                            @if (Model?.LeaveBalances != null)
+                            {
+                                @foreach (var balance in Model?.LeaveBalances)
+                                {
+                                    <div>
+                                        <p>Total Leaves: @balance.TotalLeaves</p>
+                                        @* <p>Used Leaves: @balance.UsedLeaves</p> *@
+                                        <p>Remaining Leaves: @balance.RemainingLeaves</p>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div>
+                                    <p>No Leave Balance available</p>
+                                </div>
+                            }
+                        </div>
+                        @* <div class="bg-white rounded-lg shadow-md p-6">
+                        <h2 class="text-xl font-bold mb-4">Leave Request History</h2>
+                        <table class="w-full">
+                        <thead>
+                        <tr>
+                        <th class="px-4 py-2 text-left">From</th>
+                        <th class="px-4 py-2 text-left">To</th>
+                        <th class="px-4 py-2 text-left">Reason</th>
+                        <th class="px-4 py-2 text-left">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var leave in Model.LeaveHistory)
+                        {
+                        <tr>
+                        <td class="px-4 py-2">@leave.FromDate.ToString("d")</td>
+                        <td class="px-4 py-2">@leave.ToDate.ToString("d")</td>
+                        <td class="px-4 py-2">@leave.Reason</td>
+                        <td class="px-4 py-2">@leave.Status</td>
+                        </tr>
+                        }
+                        </tbody>
+                        </table>
+                        </div> *@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- PaySlip Section -->
+<div class="col-12 mb-4" id="PaySlipSection">
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">My Pay Slips</h6>
+        </div>
+        <div class="card-body">
+            @if (Model?.PaySlips != null && Model.PaySlips.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="payslipTable">
+                        <thead>
+                            <tr>
+                                <th>Pay Period</th>
+                                <th>Basic Salary</th>
+                                <th>Gross Salary</th>
+                                <th>Net Salary</th>
+                                <th>Generated Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var payslip in Model.PaySlips ?? new List<PaySlip>())
+                            {
+                                <tr>
+                                    <td>@payslip.PayPeriod.ToString("MMMM yyyy")</td>
+                                    <td>₹@payslip.BasicSalary.ToString("N0")</td>
+                                    <td>₹@((payslip.BasicSalary + payslip.HRA + payslip.Conveyance + payslip.OtherAllowances).ToString("N0"))</td>
+                                    <td>₹@((payslip.BasicSalary + payslip.HRA + payslip.Conveyance + payslip.OtherAllowances - payslip.PF - payslip.ESIC - payslip.ProfessionalTax - payslip.IncomeTax).ToString("N0"))</td>
+                                    <td>@payslip.GeneratedDate.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <a href="@Url.Action("View", "PaySlip", new { employeeId = Model?.Employee?.EmpId,payPeriod= payslip.PayPeriod})"
+                                           class="btn btn-sm btn-primary me-2" target="_blank">
+                                            <i class="fas fa-eye"></i> View
+                                        </a>
+                                        <a href="@Url.Action("Download", "PaySlip", new { employeeId = Model?.Employee?.EmpId,payPeriod= payslip.PayPeriod})"
+                                           class="btn btn-sm btn-success">
+                                            <i class="fas fa-download"></i> Download
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-4">
+                    <div class="mb-3">
+                        <i class="fas fa-file-invoice fa-3x text-muted"></i>
+                    </div>
+                    <h5 class="text-muted">No Pay Slips Available</h5>
+                    <p class="text-muted">
+                        Your pay slips will appear here once they are generated by the accounting team.
+                        If you believe this is an error, please contact your HR representative.
+                    </p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

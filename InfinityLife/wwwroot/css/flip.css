@@ -1,0 +1,43 @@
+﻿.flip-button {
+    width: 60px;
+    height: 40px;
+    display: inline-block;
+    position: relative;
+    perspective: 700px;
+}
+
+.flip-content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+    line-height: 40px;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+.flip-button.flipped .flip-content {
+    transform: rotateX(180deg);
+}
+
+.front, .back {
+    width: 16%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.front {
+    background: #343a40;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back {
+    background: #f8f9fa;
+    color: black;
+    border: 1px solid #343a40;
+    border-radius: 5px;
+    transform: rotateX(180deg);
+}

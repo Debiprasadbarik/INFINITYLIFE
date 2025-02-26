@@ -1,0 +1,121 @@
+﻿@model List<InfinityLife.Models.TimeSheet>
+
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-6">Timesheet Reports</h1>
+
+    <div class="mb-6">
+        <form id="reportFilterForm" class="bg-white shadow-sm rounded-lg p-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+                    <input type="date" id="startDate" name="startDate"
+                           value="@(ViewBag.StartDate?.ToString("yyyy-MM-dd"))"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                </div>
+                <div>
+                    <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
+                    <input type="date" id="endDate" name="endDate"
+                           value="@(ViewBag.EndDate?.ToString("yyyy-MM-dd"))"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                </div>
+                <div class="flex items-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Generate Report
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+        <div class="p-4">
+            <h2 class="text-xl font-semibold mb-4">Summary Statistics</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="summaryStats">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Period</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Hours</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project Hours</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Learning Hours</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach (var timesheet in Model)
+                    {
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">@timesheet.EmployeeId</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @timesheet.StartDate.ToString("MM/dd/yyyy") - @timesheet.EndDate.ToString("MM/dd/yyyy")
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">@timesheet.TotalHours</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @timesheet.Entries.Where(e => e.EntryType == "Project").Sum(e => e.Hours)
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                @timesheet.Entries.Where(e => e.EntryType == "Learning").Sum(e => e.Hours)
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                    @(timesheet.Status == "Approved" ? "bg-green-100 text-green-800" :
+                                      timesheet.Status == "Rejected" ? "bg-red-100 text-red-800" :
+                                      "bg-yellow-100 text-yellow-800")">
+                                    @timesheet.Status
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button type="button"
+                                        data-timesheet-id="@timesheet.TimeSheetId"
+                                        class="view-details text-blue-600 hover:text-blue-900 mr-3">
+                                    View Details
+                                </button>
+                                @if (timesheet.Status == "Pending")
+                                {
+                                    <button type="button"
+                                            data-timesheet-id="@timesheet.TimeSheetId"
+                                            class="approve-timesheet text-green-600 hover:text-green-900 mr-3">
+                                        Approve
+                                    </button>
+                                    <button type="button"
+                                            data-timesheet-id="@timesheet.TimeSheetId"
+                                            class="reject-timesheet text-red-600 hover:text-red-900">
+                                        Reject
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal for viewing timesheet details -->
+    <div id="timesheetDetailsModal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl">
+            <div class="p-4 border-b">
+                <h3 class="text-lg font-semibold">Timesheet Details</h3>
+            </div>
+            <div class="p-4" id="timesheetDetailsContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+            <div class="p-4 border-t flex justify-end">
+                <button type="button" id="closeModal" class="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/director-report.js"></script>
+}

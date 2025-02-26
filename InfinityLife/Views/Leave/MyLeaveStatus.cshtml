@@ -1,0 +1,83 @@
+﻿@model List<InfinityLife.Models.Leave>
+
+<div class="container mt-4">
+    <h2 class="mb-4">My Leave Requests</h2>
+    <a href="@Url.Action("Index", "Dashboard")" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            You haven't made any leave requests yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive" style="padding-top:50px">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Request Date</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                        <th>Response</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var leave in Model.OrderByDescending(l => l.RequestDate))
+                    {
+                        <tr>
+                            <td>@leave.RequestDate.ToString("dd MMM yyyy")</td>
+                            <td>@leave.FromDate.ToString("dd MMM yyyy")</td>
+                            <td>@leave.ToDate.ToString("dd MMM yyyy")</td>
+                            <td>@leave.Reason</td>
+                            <td>
+                                @switch (leave.Status.ToLower())
+                                {
+                                    case "approved":
+                                        <span class="badge bg-success">Approved</span>
+                                        break;
+                                    case "rejected":
+                                        <span class="badge bg-danger">Rejected</span>
+                                        break;
+                                    case "pending":
+                                        <span class="badge bg-warning">Pending</span>
+                                        break;
+                                    default:
+                                        <span class="badge bg-secondary">@leave.Status</span>
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(leave.ResponseComment))
+                                {
+                                    @leave.ResponseComment
+                                }
+                                else
+                                {
+                                    <span class="text-muted">No response yet</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@section Styles {
+    <style>
+        .badge {
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+    </style>
+}

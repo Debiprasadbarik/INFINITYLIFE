@@ -1,0 +1,90 @@
+﻿@model InfinityLife.Models.DashboardViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pending Leave Requests</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mx-auto py-8">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">Pending Leave Requests</h1>
+            <a href="@Url.Action("Index", "Dashboard")" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                Back to Dashboard
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full table-auto border-collapse">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="px-4 py-2 text-left">Employee</th>
+                        <th class="px-4 py-2 text-left">From</th>
+                        <th class="px-4 py-2 text-left">To</th>
+                        <th class="px-4 py-2 text-left">Reason</th>
+                        <th class="px-4 py-2 text-left">Status</th>
+                        <th class="px-4 py-2 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var request in Model.PendingLeaveRequests)
+                    {
+                        <tr class="border-b">
+                            <td class="px-4 py-2">@request.EmployeeId</td>
+                            <td class="px-4 py-2">@request.FromDate.ToShortDateString()</td>
+                            <td class="px-4 py-2">@request.ToDate.ToShortDateString()</td>
+                            <td class="px-4 py-2">@request.Reason</td>
+                            <td class="px-4 py-2">@request.Status</td>
+                            <td class="px-4 py-2">
+                                <form id="leaveRequestForm" method="post" action="/Leave/Respond" class="flex justify-start">
+                                    <input type="hidden" name="leaveId" value="@request.LeaveId" />
+                                    <input type="text" name="comment" placeholder="Enter comment" class="border border-gray-300 rounded px-2 py-1 mr-2" />
+                                    <button type="submit" name="status" value="Approved" class="bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded mr-2">Approve</button>
+                                    <button type="submit" name="status" value="Rejected" class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded">Reject</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function approveRequest(leaveId, status, comment) {
+        // Ensure we select the correct input field
+        let commentInput = document.querySelector('input[name="comment"]');
+
+        // Safely get the comment value, ensuring it's never null or undefined
+        let comment = commentInput && commentInput.value ? commentInput.value.trim() : "";
+
+        // Assign default comment if empty
+        if (!comment || comment.length === 0) {
+            comment = status === "Approved" ? "Ok" : "No";
+        }
+            fetch('/Leave/Respond', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ leaveId, status, comment })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Refresh the page or update the UI
+                        location.reload();
+                    } else {
+                        alert('Error updating leave request status');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error approving leave request:', error);
+                    alert('An error occurred while processing your request');
+                });
+        }
+    </script>
+</body>
+</html>

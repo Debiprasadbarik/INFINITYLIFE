@@ -1,0 +1,138 @@
+﻿@model InfinityLife.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Edit Employee Details";
+}
+
+<h2>Edit Employee</h2>
+
+<hr />
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">Edit Employee</h2>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="@Model.Employee.EmpId" />
+                        <input type="hidden" asp-for="@Model.Employee.EmpId" />
+
+                        <div class="row">
+                            <!-- Personal Information Section -->
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Personal Information</h4>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.EmpFirstName" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.EmpFirstName" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.EmpFirstName" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.EmpLastName" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.EmpLastName" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.EmpLastName" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.EmpPhone" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.EmpPhone" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.EmpPhone" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.EmpEmail" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.EmpEmail" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.EmpEmail" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.EmpAddress" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.EmpAddress" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.EmpAddress" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.Bloodgroup" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.Bloodgroup" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.Bloodgroup" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.AadharNo" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.AadharNo" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.AadharNo" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.PanNo" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.PanNo" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.PanNo" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.DateOfBirth" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.DateOfBirth" class="form-control" type="date"/>
+                                    <span asp-validation-for="@Model.Employee.DateOfBirth" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.DateOfJoining" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.DateOfJoining" class="form-control" type="date" />
+                                    <span asp-validation-for="@Model.Employee.DateOfJoining" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Salary Information Section -->
+                            <div class="col-md-6">
+                                <h4 class="mb-3">Salary Information</h4>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.BasicSalary" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.BasicSalary" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.BasicSalary" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.HRA" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.HRA" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.HRA" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.Conveyance" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.Conveyance" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.Conveyance" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.OtherAllowances" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.OtherAllowances" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.OtherAllowances" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.PF" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.PF" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.PF" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.ESIC" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.ESIC" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.ESIC" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.ProfessionalTax" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.ProfessionalTax" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.ProfessionalTax" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label asp-for="@Model.Employee.IncomeTax" class="form-label"></label>
+                                    <input asp-for="@Model.Employee.IncomeTax" class="form-control" />
+                                    <span asp-validation-for="@Model.Employee.IncomeTax" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-between mt-4 mb-2">
+                            <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save me-2"></i>Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

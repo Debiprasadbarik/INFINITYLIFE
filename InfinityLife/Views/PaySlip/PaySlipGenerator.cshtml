@@ -1,0 +1,105 @@
+﻿@model InfinityLife.Models.Employee
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pay Slip</title>
+    <style>
+        /* Add your CSS styles for the payslip here */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .payslip {
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        .payslip h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .payslip table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .payslip th, .payslip td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .payslip th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="payslip">
+        <h1>Pay Slip</h1>
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td>@($"{Model.EmpFirstName} {Model.EmpLastName}")</td>
+            </tr>
+            <tr>
+                <th>Employee ID:</th>
+                <td>@Model.EmpId</td>
+            </tr>
+            @* <tr>
+                <th>Role:</th>
+                <td>@Model.EmployeeRole?.EmpRole</td>
+            </tr> *@
+            <tr>
+                <th>Basic Salary:</th>
+                <td>₹@Model.BasicSalary.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>HRA:</th>
+                <td>₹@Model.HRA.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>Conveyance:</th>
+                <td>₹@Model.Conveyance.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>Other Allowances:</th>
+                <td>₹@Model.OtherAllowances.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>Gross Salary:</th>
+                <td>₹@Model.GrossSalary.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>PF:</th>
+                <td>₹@Model.PF.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>ESIC:</th>
+                <td>₹@Model.ESIC.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>Professional Tax:</th>
+                <td>₹@Model.ProfessionalTax.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>Income Tax:</th>
+                <td>₹@Model.IncomeTax.ToString("N0")</td>
+            </tr>
+            <tr>
+                <th>Net Salary:</th>
+                <td>₹@Model.NetSalary.ToString("N0")</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

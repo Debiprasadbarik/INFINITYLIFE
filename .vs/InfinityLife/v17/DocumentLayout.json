@@ -1,0 +1,206 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Debi-Project\\InfinityLife\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\views\\dashboard\\directordashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\views\\dashboard\\directordashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\views\\dashboard\\employeedashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\views\\dashboard\\employeedashboard.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\wwwroot\\css\\flip.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\wwwroot\\css\\flip.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\models\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\models\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\dataaccess\\leavemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\dataaccess\\leavemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\views\\timesheet\\report.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\views\\timesheet\\report.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\views\\timesheet\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\views\\timesheet\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\controllers\\timesheetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\controllers\\timesheetcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\controllers\\payslipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\controllers\\payslipcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|c:\\debi-project\\infinitylife\\infinitylife\\dataaccess\\repositories\\timesheetrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C7869C7C-5381-45B6-98D9-518064F506E2}|InfinityLife\\InfinityLife.csproj|solutionrelative:infinitylife\\dataaccess\\repositories\\timesheetrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Report.cshtml",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Views\\TimeSheet\\Report.cshtml",
+              "RelativeDocumentMoniker": "InfinityLife\\Views\\TimeSheet\\Report.cshtml",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Views\\TimeSheet\\Report.cshtml",
+              "RelativeToolTip": "InfinityLife\\Views\\TimeSheet\\Report.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-19T08:13:07.143Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "flip.css",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\wwwroot\\css\\flip.css",
+              "RelativeDocumentMoniker": "InfinityLife\\wwwroot\\css\\flip.css",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\wwwroot\\css\\flip.css",
+              "RelativeToolTip": "InfinityLife\\wwwroot\\css\\flip.css",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-02-25T14:11:44.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "InfinityLife\\Controllers\\DashboardController.cs",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "InfinityLife\\Controllers\\DashboardController.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAYwFkAAABuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-25T12:38:17.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DashboardViewModel.cs",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Models\\DashboardViewModel.cs",
+              "RelativeDocumentMoniker": "InfinityLife\\Models\\DashboardViewModel.cs",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Models\\DashboardViewModel.cs",
+              "RelativeToolTip": "InfinityLife\\Models\\DashboardViewModel.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAA/wDUAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-25T12:10:33.061Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "LeaveManager.cs",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\DataAccess\\LeaveManager.cs",
+              "RelativeDocumentMoniker": "InfinityLife\\DataAccess\\LeaveManager.cs",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\DataAccess\\LeaveManager.cs",
+              "RelativeToolTip": "InfinityLife\\DataAccess\\LeaveManager.cs",
+              "ViewState": "AgIAAMQAAAAAAAAAAAAwwMsAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-25T11:56:31.424Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EmployeeDashboard.cshtml",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Views\\Dashboard\\EmployeeDashboard.cshtml",
+              "RelativeDocumentMoniker": "InfinityLife\\Views\\Dashboard\\EmployeeDashboard.cshtml",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Views\\Dashboard\\EmployeeDashboard.cshtml",
+              "RelativeToolTip": "InfinityLife\\Views\\Dashboard\\EmployeeDashboard.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACUAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-21T12:36:50.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DirectorDashboard.cshtml",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Views\\Dashboard\\DirectorDashboard.cshtml",
+              "RelativeDocumentMoniker": "InfinityLife\\Views\\Dashboard\\DirectorDashboard.cshtml",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Views\\Dashboard\\DirectorDashboard.cshtml",
+              "RelativeToolTip": "InfinityLife\\Views\\Dashboard\\DirectorDashboard.cshtml",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAswB8AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-19T09:50:53.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TimesheetController.cs",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Controllers\\TimesheetController.cs",
+              "RelativeDocumentMoniker": "InfinityLife\\Controllers\\TimesheetController.cs",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Controllers\\TimesheetController.cs",
+              "RelativeToolTip": "InfinityLife\\Controllers\\TimesheetController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T09:22:19.146Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TimesheetRepository.cs",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\DataAccess\\Repositories\\TimesheetRepository.cs",
+              "RelativeDocumentMoniker": "InfinityLife\\DataAccess\\Repositories\\TimesheetRepository.cs",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\DataAccess\\Repositories\\TimesheetRepository.cs",
+              "RelativeToolTip": "InfinityLife\\DataAccess\\Repositories\\TimesheetRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGAAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T09:18:25.08Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Views\\TimeSheet\\Create.cshtml",
+              "RelativeDocumentMoniker": "InfinityLife\\Views\\TimeSheet\\Create.cshtml",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Views\\TimeSheet\\Create.cshtml",
+              "RelativeToolTip": "InfinityLife\\Views\\TimeSheet\\Create.cshtml",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAABIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-02-19T08:31:57.404Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PaySlipController.cs",
+              "DocumentMoniker": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Controllers\\PaySlipController.cs",
+              "RelativeDocumentMoniker": "InfinityLife\\Controllers\\PaySlipController.cs",
+              "ToolTip": "C:\\Debi-Project\\InfinityLife\\InfinityLife\\Controllers\\PaySlipController.cs",
+              "RelativeToolTip": "InfinityLife\\Controllers\\PaySlipController.cs",
+              "ViewState": "AgIAAKAAAAAAAAAAAAAkwKkAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T13:13:25.802Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

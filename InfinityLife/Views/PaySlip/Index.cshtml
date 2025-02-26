@@ -1,0 +1,63 @@
+﻿
+@model PaySlipIndexViewModel
+@{
+
+    ViewData["Title"]="PaySlip Management";
+}
+
+<div class="container mx-auto p-6">
+    <h2 class="text-2xl font-bold mb-4">PaySlip Management</h2>
+    
+    
+@if (TempData["Success"] != null)
+{   
+<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+         
+@TempData["Success"]        
+</div>   
+}
+
+    
+    
+@if (TempData["Error"] != null)    
+{       
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">            
+@TempData["Error"]        
+</div>    
+}
+    <div class="bg-white shadow rounded-lg p-6">
+        <table class="min-w-full">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 border-b">Employee ID</th>
+                    <th class="px-6 py-3 border-b">Name</th>
+                    <th class="px-6 py-3 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+@foreach (var employee in Model.Employees)                
+{
+        @if (employee.EmpRoleId == 1)
+        {
+            continue;
+        }
+        <tr>
+        <td class="px-6 py-4 border-b">
+        @employee.EmpId
+        </td>                        
+        <td class="px-6 py-4 border-b">
+        @employee.EmpFirstName 
+        @employee.EmpLastName
+        </td>                        
+        <td class="px-6 py-4 border-b">                            
+        <a href="@Url.Action("Generate", new { employeeId= employee.EmpId})" class="btn btn-primary bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4">Generate PaySlip</a>
+        <a href="@Url.Action("View", new { employeeId = employee.EmpId, payPeriod = new DateTime(Model.CurrentYear, Model.CurrentMonth, 1) })" class="btn btn-primary bg-green-500 hover:bg-green-700 font-bold py-2 px-4">View PaySlip</a>                   
+        </td>                
+        </tr>
+        
+}
+            </tbody>
+        </table>
+    </div>
+</div>
